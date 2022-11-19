@@ -1,8 +1,4 @@
-from ImageMood import ImageMood
-
-from sys import argv
+from UI.MoodyApp import MoodyApp
 
 if __name__ == "__main__":
-    image_mood = ImageMood(argv[1])
-    image_mood.analyse()
-    print(image_mood.mood)
+    MoodyApp().run()

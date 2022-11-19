@@ -1,0 +1,10 @@
+#:kivy 1.0.9
+
+<SongAnalysisWindow>:
+    name: "song_analysis"
+
+    Button:
+        text: "Go back"
+        on_release:
+            app.root.current = "main"
+            root.manager.transition.direction = "right"

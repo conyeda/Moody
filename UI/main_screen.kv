@@ -1,0 +1,34 @@
+#:kivy 1.0.9
+#:include UI/image_analysis_screen.kv
+#:include UI/song_analysis_screen.kv
+#:include UI/recommender_screen.kv
+
+WindowManager:
+    MainWindow:
+    RecommenderWindow:
+    ImageAnalysisWindow:
+    SongAnalysisWindow:
+
+<MainWindow>:
+    name: "main"
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        Button:
+            text: "Song Recommender"
+            font_size: 32
+            background_color: [1, 1, 0.5, 1]
+        
+        Button:
+            text: "Image Analysis"
+            font_size: 32
+            on_release:
+                app.root.current = "image_analysis"
+                root.manager.transition.direction = "left"
+        
+        Button:
+            text: "Song Analysis"
+            font_size: 32
