@@ -28,12 +28,12 @@ class MERModel:
 
         self._input = Input(shape=self._input_shape)
         x = ZeroPadding2D(padding=(2,2))(self._input)
-        x = Conv2D(64, (5, 5), strides=2, activation="relu", padding="valid")(x)
+        x = Conv2D(64, (5, 5), strides=2, activation="relu")(x)
         x = BatchNormalization()(x)
 
         # 2nd Layer
         x = ZeroPadding2D(padding=(1,1))(x)
-        x = Conv2D(64, (3, 3), strides=1, activation="relu", padding="same")(x)
+        x = Conv2D(64, (3, 3), strides=1, activation="relu")(x)
         x = BatchNormalization()(x)
 
         # 3rd Layer
@@ -42,12 +42,12 @@ class MERModel:
 
         # 4th Layer
         x = ZeroPadding2D(padding=(1,1))(x)
-        x = Conv2D(128, (3, 3), strides=1, activation="relu", padding="same")(x)
+        x = Conv2D(128, (3, 3), strides=1, activation="relu")(x)
         x = BatchNormalization()(x)
 
         # 5th Layer
         x = ZeroPadding2D(padding=(1,1))(x)
-        x = Conv2D(128, (3, 3), strides=1, activation="relu", padding="same")(x)
+        x = Conv2D(128, (3, 3), strides=1, activation="relu")(x)
         x = BatchNormalization()(x)
 
         # 6th Layer
@@ -56,26 +56,26 @@ class MERModel:
 
         # 7th Layer
         x = ZeroPadding2D(padding=(1,1))(x)
-        x = Conv2D(256, (3, 3), strides=1, activation="relu", padding="same")(x)
+        x = Conv2D(256, (3, 3), strides=1, activation="relu")(x)
         x = BatchNormalization()(x)
 
         # 8th Layer
         x = ZeroPadding2D(padding=(1,1))(x)
-        x = Conv2D(256, (3, 3), strides=1, activation="relu", padding="same")(x)
+        x = Conv2D(256, (3, 3), strides=1, activation="relu")(x)
         x = BatchNormalization()(x)
 
         # 9th Layer
         x = ZeroPadding2D(padding=(1,1))(x)
-        x = Conv2D(384, (3, 3), strides=1, activation="relu", padding="same")(x)
+        x = Conv2D(384, (3, 3), strides=1, activation="relu")(x)
         x = BatchNormalization()(x)
 
         # 10th Layer
         x = ZeroPadding2D(padding=(1,1))(x)
-        x = Conv2D(512, (3, 3), strides=1, activation="relu", padding="same")(x)
+        x = Conv2D(512, (3, 3), strides=1, activation="relu")(x)
         x = BatchNormalization()(x)
 
         # 11th Layer
-        x = Conv2D(256, (3, 3), strides=1, activation="relu", padding="same")(x)
+        x = Conv2D(256, (3, 3), strides=1, activation="relu")(x)
         x = BatchNormalization()(x)
 
         # 12th Layer
