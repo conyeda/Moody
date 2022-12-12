@@ -61,7 +61,7 @@ class ImageMood:
             self._energy /= (height*width)
 
 if __name__ == "__main__":
-        image_mood =  ImageMood("C:\\Users\\antho\\OneDrive\\Escritorio\\Moody\\images\\example.jpeg")
+        image_mood =  ImageMood("../images/example.jpeg")
         image_mood.analyse()
         print(image_mood.valence)
         print(image_mood.energy)   
