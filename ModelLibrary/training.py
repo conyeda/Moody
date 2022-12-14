@@ -10,11 +10,11 @@ from keras.callbacks import EarlyStopping
 
 if __name__ == '__main__':
     PATH = str(pathlib.Path(__file__).parent.resolve())
-    FILE_PATH = '/'.join((PATH,'../spectrograms/'))
+    FILE_PATH = '/'.join((PATH,'..','..','..','spectrograms/'))
 
     data = data_from_npy(FILE_PATH)
     
-    expected_results = y_from_excel('/'.join([PATH, '../mean_ratings_set1.xls']))
+    expected_results = y_from_excel('/'.join([PATH, '..','..','..','mean_ratings_set1.xls']))
 
     A2Mid2Joint = MERModel((149,313,1))
     # TODO Understand how data is saved and get y results

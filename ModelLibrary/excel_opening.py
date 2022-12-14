@@ -22,8 +22,8 @@ if __name__ == '__main__':
     import pathlib
 
     PATH = str(pathlib.Path(__file__).parent.resolve())
-    FILE_PATH = '/'.join((PATH,'../mean_ratings_set1.xls'))
+    FILE_PATH = '/'.join((PATH,'..','..','..','mean_ratings_set1.xls'))
     
     data = y_from_excel(FILE_PATH)
     
-    print(len(data))
+    print(data)

@@ -104,7 +104,7 @@ class MERModel:
 
         #mid_level_features =  Dense(7, name='mid_level_features')(x)
 
-        emotions = Dense(8, activation="softmax", name='emotions')(x)
+        emotions = Dense(8, activation="relu", name='emotions')(x)
 
         #self._outputs = (mid_level_features, emotions)
         self._outputs = emotions
