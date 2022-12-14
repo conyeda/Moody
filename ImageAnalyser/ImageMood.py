@@ -8,7 +8,6 @@ import numpy
 class ImageMood:
 
     def __init__(self, image_path):
-        self._frequencies_array = None
         self._image_path = image_path
         self._image = None
         self._image_data = None
@@ -61,7 +60,7 @@ class ImageMood:
             self._energy /= (height*width)
 
 if __name__ == "__main__":
-        image_mood =  ImageMood("../images/example.jpeg")
+        image_mood =  ImageMood("../images/yellow.jpeg")
         image_mood.analyse()
         print(image_mood.valence)
         print(image_mood.energy)   
