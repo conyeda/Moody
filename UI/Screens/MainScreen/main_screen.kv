@@ -1,15 +1,15 @@
 #:kivy 1.0.9
-#:include UI/image_analysis_screen.kv
-#:include UI/song_analysis_screen.kv
-#:include UI/recommender_screen.kv
+#:include UI/Screens/ImageAnalysisScreen/image_analysis_screen.kv
+#:include UI/Screens/SongAnalysisScreen/song_analysis_screen.kv
+#:include UI/Screens/RecommenderScreen/recommender_screen.kv
 
 WindowManager:
-    MainWindow:
-    RecommenderWindow:
-    ImageAnalysisWindow:
-    SongAnalysisWindow:
+    MainScreen:
+    RecommenderScreen:
+    ImageAnalysisScreen:
+    SongAnalysisScreen:
 
-<MainWindow>:
+<MainScreen>:
     name: "main"
 
     BoxLayout:
@@ -21,6 +21,9 @@ WindowManager:
             text: "Song Recommender"
             font_size: 32
             background_color: [1, 1, 0.5, 1]
+            on_release:
+                app.root.current = "recommender"
+                root.manager.transition.direction = "left"
         
         Button:
             text: "Image Analysis"
@@ -32,3 +35,5 @@ WindowManager:
         Button:
             text: "Song Analysis"
             font_size: 32
+            on_release:
+                root.analyse_songs()

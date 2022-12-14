@@ -1,10 +1,10 @@
 #:kivy 1.0.9
-#:include UI/load_dialog_widget.kv
+#:include UI/Components/LoadDialog/load_dialog_widget.kv
 
-<ImageAnalysisWindow>:
+<ImageAnalysisScreen>:
     name: "image_analysis"
     image_path_label: image_path_label
-    mood_label: mood_label
+    image_analysis_result: image_analysis_result
     image_view: image_view
 
     BoxLayout:
@@ -31,8 +31,8 @@
                     root.analyse()
 
         Label:
-            id: mood_label
-            text: mood_label.text
+            id: image_analysis_result
+            text: image_analysis_result.text
             color: [0, 0, 0, 1]
             size_hint: 1, 0.25
 

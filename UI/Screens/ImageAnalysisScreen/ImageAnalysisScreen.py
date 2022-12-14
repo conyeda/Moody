@@ -1,19 +1,22 @@
-from kivy.properties import ObjectProperty, StringProperty
+from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.popup import Popup
 
 from ImageAnalyser.ImageMood import ImageMood
-from UI.LoadDialog import LoadDialog
+from UI.Components.LoadDialog.LoadDialog import LoadDialog
+
+# TODO: uncomment
+# from recommender import Recommender
 
 from threading import Thread
 import os
 
-class ImageAnalysisWindow(Screen):
+class ImageAnalysisScreen(Screen):
     load_file = ObjectProperty(None)
     image_path_label = ObjectProperty(None)
-    mood_label = ObjectProperty(None)
+    image_analysis_result = ObjectProperty(None)
     image_view = ObjectProperty(None)
-    _file_chooser_path = ""
+    _file_chooser_path = os.getcwd()
 
     def dismiss_popup(self):
         self._popup.dismiss()
@@ -31,11 +34,17 @@ class ImageAnalysisWindow(Screen):
         self._popup.open()
 
     def analyse(self):
-        if (self.image_path_label.text is not None):
-            self.mood_label.text = "analysing..."
+        if (self.image_path_label.text is not ""):
+            self.image_analysis_result.text = "analysing..."
             Thread(target=self.analyse_async).start()
 
     def analyse_async(self):
+        # TODO: remove
         image_mood = ImageMood(self.image_path_label.text)
         image_mood.analyse()
-        self.mood_label.text = image_mood.mood
+        self.image_analysis_result.text = "Mood: {}.".format(image_mood.mood)
+
+        # TODO: uncomment
+        # rec = Recommender(self.image_path_label.text)
+        # valence,energy = rec.analyze()
+        #self.image_analysis_result.text = "Valence: {}. Energy: {}.".format(valence, energy)

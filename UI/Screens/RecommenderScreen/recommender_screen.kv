@@ -1,0 +1,88 @@
+#:kivy 1.0.9
+#:include UI/Components/LoadDialog/load_dialog_widget.kv
+
+<RecommenderScreen>:
+    name: "recommender"
+    image_path_label: image_path_label
+    recommended_song_label: recommended_song_label
+    image_view: image_view
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10, 10, 10, 10
+        background_color: [1, 1, 1, 1]
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, 0.25
+
+            Button:
+                text: "Select image"
+                font_size: 24
+                on_release:
+                    root.show_load()
+            
+            Button:
+                text: "Recommend"
+                font_size: 24
+                background_color: [0, 1, 0, 1]
+                on_release:
+                    root.recommend()
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, 0.25
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 0.25, 0.20
+                pos_hint: {"center_x": 0.5}
+                spacing: 2
+                padding: [0, 5]
+                
+                Button:
+                    text: "Play"
+                    font_size: 16
+                    background_color: [0, 1.12, 2, 1]
+                    on_release:
+                        root.play_song()
+
+                Button:
+                    text: "Pause"
+                    font_size: 16
+                    background_color: [0, 1.12, 2, 1]
+                    on_release:
+                        root.pause_song()
+
+                Button:
+                    text: "Stop"
+                    font_size: 16
+                    background_color: [2, 0, 0, 1]
+                    on_release:
+                        root.stop_song()
+
+            Label:
+                id: recommended_song_label
+                text: recommended_song_label.text
+                color: [0, 0, 0, 1]
+                size_hint: 1, 0.25
+
+        Image:
+            id: image_view
+            source: image_view.source
+            allow_stretch: True
+            keep_ratio: True
+
+        Label:
+            id: image_path_label
+            text: image_path_label.text
+            color: [0, 0, 0, 1]
+            size_hint: 1, 0.25
+
+        Button:
+            text: "Back"
+            font_size: 24
+            size_hint: 1, 0.25
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"

@@ -1,4 +1,4 @@
 from kivy.uix.screenmanager import Screen
 
-class RecommenderWindow(Screen):
+class SongAnalysisScreen(Screen):
     pass
