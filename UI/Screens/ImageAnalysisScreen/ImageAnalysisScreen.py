@@ -2,11 +2,10 @@ from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.popup import Popup
 
-from ImageAnalyser.ImageMood import ImageMood
+from ImageMood import ImageMood
 from UI.Components.LoadDialog.LoadDialog import LoadDialog
 
-# TODO: uncomment
-# from recommender import Recommender
+from recommender import Recommender
 
 from threading import Thread
 import os
@@ -39,12 +38,6 @@ class ImageAnalysisScreen(Screen):
             Thread(target=self.analyse_async).start()
 
     def analyse_async(self):
-        # TODO: remove
-        image_mood = ImageMood(self.image_path_label.text)
-        image_mood.analyse()
-        self.image_analysis_result.text = "Mood: {}.".format(image_mood.mood)
-
-        # TODO: uncomment
-        # rec = Recommender(self.image_path_label.text)
-        # valence,energy = rec.analyze()
-        #self.image_analysis_result.text = "Valence: {}. Energy: {}.".format(valence, energy)
+        rec = Recommender(self.image_path_label.text)
+        valence,energy = rec.analyze()
+        self.image_analysis_result.text = "Valence: {}. Energy: {}.".format(valence, energy)

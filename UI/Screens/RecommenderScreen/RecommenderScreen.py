@@ -3,8 +3,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.popup import Popup
 from kivy.core.audio import SoundLoader
 
-# TODO: uncomment
-# from recommender import Recommender
+from recommender import Recommender
 from ImageAnalyser.ImageMood import ImageMood
 from UI.Components.LoadDialog.LoadDialog import LoadDialog
 
@@ -39,15 +38,16 @@ class RecommenderScreen(Screen):
         self._popup.open()
 
     def recommend(self):
-        if (self.image_path_label.text is not ""):
+        if (self.image_path_label.text != ""):
             self.recommended_song_label.text = "analysing..."
+            if (self._song is not None):
+                self._song.unload()
+                self._song = None
             Thread(target=self.recommend_async).start()
 
     def recommend_async(self):
-        self._recommended_song = "audio_test.mp3"
-        # TODO: uncomment
-        # rec = Recommender(image_path_label.text)
-        # self._recommended_song = rec.recommend()
+        rec = Recommender(self.image_path_label.text)
+        self._recommended_song = rec.recommend()
         self.recommended_song_label.text = "Your song is: {}.".format(self._recommended_song)
 
     def play_song(self):
@@ -59,7 +59,7 @@ class RecommenderScreen(Screen):
             self._song.seek(self._song_pos)
 
     def pause_song(self):
-        if (self._song is not None and self._song.state is "play"):
+        if (self._song is not None and self._song.state == "play"):
             self._song_pos = self._song.get_pos()
             self._song.stop()
 

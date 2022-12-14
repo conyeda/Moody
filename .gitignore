@@ -6,3 +6,6 @@ environment/
 
 # visual studio
 .vs/
+
+# audios
+xy_instances/

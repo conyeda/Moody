@@ -1,11 +1,10 @@
 import pathlib
-import sys
-PATH = str(pathlib.Path(__file__).parent.resolve())
-sys.path.insert(1, '/'.join((PATH, 'ImageAnalyser')))
 from ImageMood import ImageMood
 from os import listdir
 from math import sqrt, pow
 import random
+
+PATH = str(pathlib.Path(__file__).parent.resolve())
 
 class Recommender:
 
@@ -55,11 +54,3 @@ class Recommender:
         self.search()
         
         return self._song
-
-if __name__ == '__main__':
-    rec = Recommender('images/yellow.jpeg')
-    print(rec.recommend())
-    print(rec._valence, rec._energy)
-    
-
-

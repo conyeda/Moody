@@ -3,9 +3,7 @@ from npy_opening import data_from_npy
 from keras.models import load_model
 from audio_processing import audio_processing
 import pathlib
-import sys
 import os
-
 
 PATH = pathlib.Path(__file__).parent
 

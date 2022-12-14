@@ -7,17 +7,14 @@ from UI.Screens.ImageAnalysisScreen.ImageAnalysisScreen import ImageAnalysisScre
 from UI.Screens.SongAnalysisScreen.SongAnalysisScreen import SongAnalysisScreen
 from UI.Screens.RecommenderScreen.RecommenderScreen import RecommenderScreen
 
-# TODO: uncomment
-#from ModelLibrary.classify import Classifier
+from ModelLibrary.classify import Classifier
 
 Window.clearcolor = (1, 1, 1, 1)
 
 class MainScreen(Screen):
     def analyse_songs(self):
-        print("You did it!")
-        # TODO: uncomment
-        # classifier = Classifier()
-        # classifier.classify()
+        classifier = Classifier("trained_MER.h5")
+        classifier.classify()
 
 class WindowManager(ScreenManager):
     pass
