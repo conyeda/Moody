@@ -10,6 +10,7 @@ from recommender import Recommender
 from threading import Thread
 import os
 
+
 class ImageAnalysisScreen(Screen):
     load_file = ObjectProperty(None)
     image_path_label = ObjectProperty(None)
@@ -27,7 +28,8 @@ class ImageAnalysisScreen(Screen):
         self._popup.dismiss()
 
     def show_load(self):
-        content = LoadDialog(load=self.load, cancel=self.dismiss_popup, path=self._file_chooser_path)
+        content = LoadDialog(
+            load=self.load, cancel=self.dismiss_popup, path=self._file_chooser_path)
         self._popup = Popup(title="Load file", content=content,
                             size_hint=(0.9, 0.9))
         self._popup.open()
@@ -39,5 +41,6 @@ class ImageAnalysisScreen(Screen):
 
     def analyse_async(self):
         rec = Recommender(self.image_path_label.text)
-        valence,energy = rec.analyze()
-        self.image_analysis_result.text = "Valence: {}. Energy: {}.".format(valence, energy)
+        valence, energy = rec.analyze()
+        self.image_analysis_result.text = "Valence: {}. Energy: {}.".format(
+            valence, energy)

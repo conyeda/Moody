@@ -7,8 +7,9 @@ import pathlib
 
 
 PATH = str(pathlib.Path(__file__).parent.parent.resolve())
-SAVE_PATH = '/'.join((PATH,'spectograms/'))
+SAVE_PATH = '/'.join((PATH, 'spectograms/'))
 AUDIOS_FILE = '/'.join((PATH, 'audios/'))
+
 
 class Loader:
     # loader is responsible for loading the audio file
@@ -33,15 +34,21 @@ class Padder:
         self.mode = mode
 
     def left_pad(self, array, num_missing_items):
-        padded_array = np.pad(array,                # array to pad
-                              (num_missing_items, 0), # we add the missing elements in the left with constant_values
-                              mode=self.mode) # constant_values = 0
+        # we add the missing elements in the left with constant_values
+        # array -> array to pad
+        # constant_values = 0
+        padded_array = np.pad(array,
+                              (num_missing_items, 0),
+                              mode=self.mode)
         return padded_array
 
     def right_pad(self, array, num_missing_items):
-        padded_array = np.pad(array,                # array to pad
-                              (0, num_missing_items), # we add the missing elements in the right with constant_values
-                              mode=self.mode)   # constant_values = 0
+        # we add the missing elements in the right with constant_values
+        # array -> array to pad
+        # constant_values = 0
+        padded_array = np.pad(array,
+                              (0, num_missing_items),
+                              mode=self.mode)
         return padded_array
 
 
@@ -53,19 +60,13 @@ class LogSpectrogramExtractor:
         self.hop_length = hop_length
 
     def extract(self, signal):
-        stft = librosa.stft(signal, #
+        stft = librosa.stft(signal,
                             n_fft=self.frame_rate,
                             hop_length=self.hop_length,
                             win_length=149)[:-1]
-        spectrogram = np.abs(stft) #
-        log_spectrogram = librosa.amplitude_to_db(spectrogram)  #
-        #log_spectrogram=librosa.features.melspectogram(S=log_spectrogram, n_mels=149)
+        spectrogram = np.abs(stft)
+        log_spectrogram = librosa.amplitude_to_db(spectrogram)
 
-        #plt.figure()
-        #librosa.display.specshow(log_spectrogram)
-        #plt.colorbar()
-        #plt.show()
-        
         return log_spectrogram
 
 
@@ -76,14 +77,14 @@ class Saver:
         self.feature_save_dir = feature_save_dir
 
     def save_feature(self, feature, file_path):
-        save_path = self._generate_save_path(file_path) #
+        save_path = self._generate_save_path(file_path)
         with open(save_path, 'wb') as f:
             np.save(f, feature, allow_pickle=True)
         return save_path
 
     def _generate_save_path(self, file_path):
-        file_name = os.path.split(file_path)[1] #
-        save_path = os.path.join(self.feature_save_dir, file_name + ".npy") #
+        file_name = os.path.split(file_path)[1]
+        save_path = os.path.join(self.feature_save_dir, file_name + ".npy")
         return save_path
 
 
@@ -107,29 +108,33 @@ class PreprocessingPipeline:
         self.min_max_values = {}
         self._loader = None
         self._num_expected_samples = None
+        self.save_path = None
 
-    @property                   # Getter
+    @property
     def loader(self):
+        # Getter
         return self._loader
 
-    @loader.setter              # Setter
+    @loader.setter
     def loader(self, loader):
+        # Setter
         self._loader = loader
-        self._num_expected_samples = int(self.loader.sample_rate * self.loader.duration)
+        self._num_expected_samples = int(
+            self.loader.sample_rate * self.loader.duration)
 
-    def process(self, audio_files_directory):                   #
-        for root, _, files in os.walk(audio_files_directory):           #
+    def process(self, audio_files_directory):
+        for root, _, files in os.walk(audio_files_directory):
             for file in files:
-                file_path = os.path.join(root, file)                    #
+                file_path = os.path.join(root, file)
                 self._process_file(file_path)
                 print(f"Processed file {file_path}")
 
-    def _process_file(self, file_path):                 #
+    def _process_file(self, file_path):
         signal = self.loader.load(file_path)
         if self._is_padding_necessary(signal):
             signal = self._apply_padding(signal)
         feature = self.extractor.extract(signal)
-        save_path = self.saver.save_feature(feature, file_path)
+        self.save_path = self.saver.save_feature(feature, file_path)
 
     def _is_padding_necessary(self, signal):
         if len(signal) < self._num_expected_samples:
@@ -141,14 +146,14 @@ class PreprocessingPipeline:
         padded_signal = self.padder.right_pad(signal, num_missing_samples)
         return padded_signal
 
+
 def audio_processing(spectogram_save_dir=SAVE_PATH, audios_file=AUDIOS_FILE):
     FRAME_SIZE = 299
     HOP_LENGTH = 705
-    DURATION = 10 # In seconds
+    DURATION = 10  # In seconds
     SAMPLE_RATE = 22050
     MONO = True
 
-   
     loader = Loader(SAMPLE_RATE, DURATION, MONO)
     padder = Padder()
     log_spectrogram_extractor = LogSpectrogramExtractor(FRAME_SIZE, HOP_LENGTH)
@@ -166,7 +171,7 @@ def audio_processing(spectogram_save_dir=SAVE_PATH, audios_file=AUDIOS_FILE):
 if __name__ == "__main__":
     FRAME_SIZE = 299
     HOP_LENGTH = 705
-    DURATION = 10 # In seconds
+    DURATION = 10
     SAMPLE_RATE = 22050
     MONO = True
 

@@ -10,6 +10,7 @@ from UI.Components.LoadDialog.LoadDialog import LoadDialog
 from threading import Thread
 import os
 
+
 class RecommenderScreen(Screen):
     load_file = ObjectProperty(None)
     image_path_label = ObjectProperty(None)
@@ -32,7 +33,8 @@ class RecommenderScreen(Screen):
         self._popup.dismiss()
 
     def show_load(self):
-        content = LoadDialog(load=self.load, cancel=self.dismiss_popup, path=self._file_chooser_path)    
+        content = LoadDialog(
+            load=self.load, cancel=self.dismiss_popup, path=self._file_chooser_path)
         self._popup = Popup(title="Load file", content=content,
                             size_hint=(0.9, 0.9))
         self._popup.open()
@@ -48,11 +50,13 @@ class RecommenderScreen(Screen):
     def recommend_async(self):
         rec = Recommender(self.image_path_label.text)
         self._recommended_song = rec.recommend()
-        self.recommended_song_label.text = "Your song is: {}.".format(self._recommended_song)
+        self.recommended_song_label.text = "Your song is: {}.".format(
+            self._recommended_song)
 
     def play_song(self):
         if (self._song is None and self._recommended_song is not None):
-            self._song = SoundLoader.load(os.path.join(self._SONGS_DIRECTORY, self._recommended_song))
+            self._song = SoundLoader.load(os.path.join(
+                self._SONGS_DIRECTORY, self._recommended_song))
 
         if (self._song is not None):
             self._song.play()

@@ -11,15 +11,19 @@ from ModelLibrary.classify import Classifier
 
 Window.clearcolor = (1, 1, 1, 1)
 
+
 class MainScreen(Screen):
     def analyse_songs(self):
         classifier = Classifier("trained_MER.h5")
         classifier.classify()
 
+
 class WindowManager(ScreenManager):
     pass
 
+
 kv = Builder.load_file("UI/Screens/MainScreen/main_screen.kv")
+
 
 class MoodyApp(App):
     def build(self):

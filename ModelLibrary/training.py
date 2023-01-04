@@ -1,4 +1,4 @@
-# Script used to train the model and save it
+#  Script used to train the model and save it
 
 import matplotlib.pyplot as plt
 from model import MERModel
@@ -10,13 +10,14 @@ from keras.callbacks import EarlyStopping
 
 if __name__ == '__main__':
     PATH = str(pathlib.Path(__file__).parent.resolve())
-    FILE_PATH = '/'.join((PATH,'..','..','..','spectrograms/'))
+    FILE_PATH = '/'.join((PATH, '..', '..', '..', 'spectrograms/'))
 
     data = data_from_npy(FILE_PATH)
-    
-    expected_results = y_from_excel('/'.join([PATH, '..','..','..','mean_ratings_set1.xls']))
 
-    A2Mid2Joint = MERModel((149,313,1))
+    expected_results = y_from_excel(
+        '/'.join([PATH, '..', '..', '..', 'mean_ratings_set1.xls']))
+
+    A2Mid2Joint = MERModel((149, 313, 1))
     # TODO Understand how data is saved and get y results
     es = EarlyStopping(patience=50)
     history = A2Mid2Joint.model.fit(
@@ -25,7 +26,7 @@ if __name__ == '__main__':
         epochs=4000, shuffle=True,
         validation_split=0.2,
         callbacks=[es]
-        )
+    )
     # list all data in history
     print(history.history.keys())
     # summarize history for accuracy
