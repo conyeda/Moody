@@ -5,6 +5,9 @@ import ColorMood
 from PIL import Image
 import numpy
 
+import time
+
+number_of_threads = 1
 
 class ImageMood:
 
@@ -12,6 +15,9 @@ class ImageMood:
         self._image_path = image_path
         self._image = None
         self._image_data = None
+        self._colors = numpy.array([element["color"] for element in ColorMood.COLORS])
+        self._valences = numpy.array([element["valence"] for element in ColorMood.COLORS])
+        self._energies = numpy.array([element["energy"] for element in ColorMood.COLORS])
         self._valence = None
         self._energy = None
         self._lock = Lock()
@@ -24,38 +30,56 @@ class ImageMood:
     def energy(self):
         return self._energy
 
-    def analyse_row(self, row, width):
-        closer_color = 0
-        closer_distance = 0
-        for j in range(0, width):
-            closer_color = 0
-            closer_distance = numpy.sum(numpy.power(
-                ColorMood.COLORS[0]["color"] - self._image_data[row][j], [2, 2, 2]))
-            for c in range(1, len(ColorMood.COLORS)):
-                current_distance = numpy.sum(numpy.power(
-                    ColorMood.COLORS[c]["color"] - self._image_data[row][j], [2, 2, 2]))
-                if current_distance < closer_distance:
-                    closer_distance = current_distance
-                    closer_color = c
-            # TODO: Race condition. Check if solved
-            self._lock.acquire()
-            self._valence += ColorMood.COLORS[closer_color]["valence"]
-            self._energy += ColorMood.COLORS[closer_color]["energy"]
-            self._lock.release()
+    def analyse_rows(self, start_row, end_row):
+        row_valence = 0
+        row_energy = 0
+
+        for i in range(start_row, end_row):
+            row = numpy.array(self._image_data[i])
+            sub = row[:, numpy.newaxis] - self._colors
+            pow = numpy.power(sub, 2)
+            sum = numpy.sum(pow, 2)
+            indices = numpy.argmin(sum, 1)
+            row_valence += numpy.sum(self._valences[indices])
+            row_energy += numpy.sum(self._energies[indices])
+
+        self._lock.acquire()
+        self._valence += row_valence
+        self._energy += row_energy
+        self._lock.release()
 
     def analyse(self):
+        start_time = time.perf_counter()
+
         if not self._valence:
             self._image = Image.open(self._image_path)
             self._image_data = numpy.asarray(self._image)
             height = self._image_data.shape[0]
             width = self._image_data.shape[1]
+
             self._valence = 0
             self._energy = 0
-            for i in range(0, height):
-                Thread(target=self.analyse_row, args=[i, width]).run()
+            threads = []
+            rows_per_thread = int((height / number_of_threads) + 1)
+            sr = 0
+            er = rows_per_thread
 
+            for i in range(0, number_of_threads):
+                sr = i * rows_per_thread
+                er = min(((i + 1) * rows_per_thread), height)
+                t = Thread(target=self.analyse_rows, args=(sr, er))
+                t.start()
+                threads.append(t)
+
+            for thread in threads:
+                thread.join()
+                
             self._valence /= (height*width)
             self._energy /= (height*width)
+
+        end_time = time.perf_counter()
+
+        print('Analyse time: %.2fs' % (end_time - start_time))
 
 
 if __name__ == "__main__":
