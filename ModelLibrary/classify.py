@@ -51,7 +51,7 @@ class Classifier:
         audio_processing()
         files = os.listdir(''.join(((str(PATH.parent.resolve())), '/audios')))
         files.sort()
-        predictions = self._model.predict(data_from_npy(
+        (predictions, ml_predictions) = self._model.predict(data_from_npy(
             ''.join(((str(PATH.parent.resolve())), '/spectograms'))))
         lengthpred = len(predictions)
         for i in range(0, lengthpred):
