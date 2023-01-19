@@ -1,15 +1,15 @@
 import numpy as np
-import pandas
+
 
 def csv_to_np(path, skip_header) -> np.ndarray:
-    """_summary_
+    """Read a csv file and return a numpy array.
 
     Args:
-        path (_type_): _description_
+        path (PathLike): Path to the csv file
         skip_header (_type_): skip the first n lines of the csv file being n the number of the argument
 
     Returns:
-        np.ndarray: _description_
+        np.ndarray: numpy array with the data from the csv file
     """
     return np.genfromtxt(path, delimiter=';', skip_header=skip_header)
 
