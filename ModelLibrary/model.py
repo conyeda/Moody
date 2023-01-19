@@ -101,12 +101,12 @@ class MERModel:
 
         x = self._build_base_model()
 
-        # mid_level_features =  Dense(7, name='mid_level_features')(x)
+        mid_level_features =  Dense(7, name='mid_level_features')(x)
 
         emotions = Dense(8, activation="relu", name='emotions')(x)
 
-        # self._outputs = (mid_level_features, emotions)
-        self._outputs = emotions
+        self._outputs = (mid_level_features, emotions)
+        #self._outputs = emotions
         model = Model(inputs=self._input, outputs=self._outputs,
                       name='MusicEmotionRecognitor')
 
@@ -121,11 +121,11 @@ class MERModel:
 
         optimizer = Adam(learning_rate=learning_rate)
         losses = {
-            # 'mid_level_features':'mse',
+            'mid_level_features':'mse',
             'emotions': 'mse',
         }
         loss_weights = {
-            # 'mid_level_features':1.0,
+            'mid_level_features':1.0,
             'emotions': 1.0,
         }
         metrics = [correlation]
