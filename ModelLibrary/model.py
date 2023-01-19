@@ -6,8 +6,15 @@ from pcc import correlation
 
 class MERModel:
     # Model build and configure model A2Mid2Joint for trainning
+    """class with the used Model based in A2Mid2Joint of the paper
+    """    
     def __init__(self, input_shape, learning_rate=0.0005):
+        """constructor of the model
 
+        Args:
+            input_shape (IntegerTouple): touple with the size of the input
+            learning_rate (float, optional): Defaults to 0.0005.
+        """        
         self._input_shape = input_shape
         self._learning_rate = learning_rate
         self._model = None
@@ -18,14 +25,25 @@ class MERModel:
 
     @property
     def model(self):
+        """property of the model
+
+        Returns:
+            kerasModel: the final model
+        """        
         return self._model
 
     def _build(self):
+        """build the model
+        """        
         self._build_total_model()
         self.compile(self._learning_rate)
 
     def _build_base_model(self):
+        """convolutional part of the model
 
+        Returns:
+            keras Graph: descriptive graph of the convolutional part of the model
+        """        
         self._input = Input(shape=self._input_shape)
         x = ZeroPadding2D(padding=(2, 2))(self._input)
         x = Conv2D(64, (5, 5), strides=2, activation="relu")(x)
@@ -98,6 +116,12 @@ class MERModel:
         return x
 
     def _build_A2Mid2EJointBranch(self):
+        """Build lineal part of the model that contains the mid-level features layer
+            and the emotions layer 
+
+        Returns:
+            keras Model: final model
+        """        
 
         x = self._build_base_model()
 
@@ -114,11 +138,17 @@ class MERModel:
 
     def _build_total_model(self):
 
+        """save the result model in the class
+        """        
         A2Mid2EJoint_B = self._build_A2Mid2EJointBranch()
         self._model = A2Mid2EJoint_B
 
     def compile(self, learning_rate):
+        """compile the model
 
+        Args:
+            learning_rate (Float): learning rate stablished to train the model 
+        """        
         optimizer = Adam(learning_rate=learning_rate)
         losses = {
             # 'mid_level_features':'mse',
@@ -133,4 +163,6 @@ class MERModel:
                             metrics=metrics, loss_weights=loss_weights)
 
     def save(self):
+        """save the model in disk
+        """        
         self._model.save('trained_MER.h5')

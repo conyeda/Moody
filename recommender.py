@@ -7,8 +7,14 @@ import random
 PATH = str(pathlib.Path(__file__).parent.resolve())
 
 class Recommender:
-
+    """class with the recommender of the song based on an image
+    """
     def __init__(self, image_path) -> None:
+        """constructor of the class
+
+        Args:
+            image_path (PathLike): path with the image path
+        """
         self._image_path = image_path
         self._image_mood = ImageMood(image_path)
         self._song = None
@@ -16,13 +22,17 @@ class Recommender:
         self._energy = 0.0
     
     def analyze(self):
-    # Analyze the image and return its valence and energy
+        """analyze the image and return its valence and energy
 
+        Returns:
+            FloatTuple: set of two values (valence and energy)
+        """
         self._image_mood.analyse()
         return ((self._image_mood.valence-1)/4, (self._image_mood.energy-1)/4)
 
     def search(self):
-    # Search the song that is neareset to the image
+        """search the audio whose values are the nearest one to the selected image
+        """    
         m_valence = self._valence
         m_energy = self._energy
         
@@ -48,7 +58,11 @@ class Recommender:
 
 
     def recommend(self):
-    # Analyze the image and return the apropiate song
+        """analyze the image and return the appropiate song
+
+        Returns:
+            PathLike: path of the selected and final song
+        """
         if not self._image_mood.valence:
             self._valence, self._energy = self.analyze()
         self.search()

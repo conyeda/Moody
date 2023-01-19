@@ -1,3 +1,7 @@
+"""
+This file contains an array where each element is a dictionary.
+What we can find in these dictionaries is: a color, its valence and its energy.
+"""
 COLORS = [
     {"color": [110, 60, 56], "name": 'dark red',
         "valence":2.78, "energy": 2.65},

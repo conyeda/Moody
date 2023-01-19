@@ -3,6 +3,15 @@ from tensorflow import multiply
 
 
 def correlation(x, y):
+    """correlation function between two values
+
+    Args:
+        x (Tensor): set of given values
+        y (Tensor): set of expected values
+
+    Returns:
+        Float: the value of correlation between x and y
+    """    
     mx = reduce_mean(x)
     my = reduce_mean(y)
     xm, ym = x-mx, y-my

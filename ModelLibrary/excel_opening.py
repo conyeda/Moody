@@ -3,7 +3,14 @@ import numpy as np
 
 
 def y_from_excel(path) -> np.ndarray:
+    """open excel and converts in numPy array
 
+    Args:
+        path (PathLike): path of the excel
+
+    Returns:
+        np.ndarray: array with emotions normalized
+    """
     wb = xlrd.open_workbook(path)
     sheet = wb.sheet_by_index(0)
 

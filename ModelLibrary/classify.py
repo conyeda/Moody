@@ -9,15 +9,16 @@ PATH = pathlib.Path(__file__).parent
 
 
 class Classifier:
-    # Class that use model tu classify audios in folders
+    """Class that use model to classify audios in folders
+    """
     def __init__(self, model_path='../trained_MER.h5') -> None:
         self._model = load_model(model_path, custom_objects={
                                  'correlation': correlation})
 
     def test_folders(self) -> None:
-        # Test if the expected folders had been created
-        #  If not -> Create them
-        #  If yes -> Nothing is done
+        """test if the expected folder had been created
+        if not, create the folder
+        """
         path = PATH
         os.makedirs(''.join((str(path), '/xy_instances')), exist_ok=True)
 
@@ -26,8 +27,8 @@ class Classifier:
         audio_processing()
 
     def clean(self) -> None:
-        # Delete npy audios
-        # Delete initial audios
+        """delete npy audios and initial audios leaving only the ones in the xy_instances folder
+        """
         for spectfile in os.listdir(''.join(((str(PATH.parent.resolve())), '/spectograms/'))):
             os.remove(os.path.join(
                 ''.join(((str(PATH.parent.resolve())), '/spectograms/', spectfile))))
@@ -37,6 +38,8 @@ class Classifier:
                 ''.join(((str(PATH.parent.resolve())), '/audios/', audiofile))))
 
     def classify(self) -> None:
+        """realize the process of classify using the above functions and use a cont to avoid repeat names of files
+        """
         #  Do all the process of classifying
         # 1. Use test_folders()
         # 2. Use audio_processing()

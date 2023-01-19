@@ -7,7 +7,8 @@ import pathlib
 from npy_opening import data_from_npy
 from keras.callbacks import EarlyStopping
 
-
+"""train the model
+"""
 if __name__ == '__main__':
     PATH = str(pathlib.Path(__file__).parent.resolve())
     FILE_PATH = '/'.join((PATH, '..', '..', '..', 'spectrograms/'))

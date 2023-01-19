@@ -2,11 +2,14 @@
 #:include UI/Components/LoadDialog/load_dialog_widget.kv
 
 <ImageAnalysisScreen>:
+    #parameters that the screen receive
+    #first parameter is writen but the other ones are load from ImageAnalysisScreen.py
     name: "image_analysis"
     image_path_label: image_path_label
     image_analysis_result: image_analysis_result
     image_view: image_view
-
+    #Screen where the image is analyzed
+    #Clicking in the second botton, this screen will emerge
     BoxLayout:
         orientation: "vertical"
         padding: 10, 10, 10, 10

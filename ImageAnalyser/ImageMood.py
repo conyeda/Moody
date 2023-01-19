@@ -10,8 +10,18 @@ import time
 number_of_threads = 1
 
 class ImageMood:
-
+    """This class is responsible for analyzing the images.
+    """
     def __init__(self, image_path):
+       
+        """
+            Arg:
+                image_path: path of the image.
+
+            Constructor of the class.
+            Receives where is the path of the image that is going to be analyzed
+            Saves the value taking into account the values in the file ColorMood.py
+        """
         self._image_path = image_path
         self._image = None
         self._image_data = None
@@ -24,16 +34,35 @@ class ImageMood:
 
     @property
     def valence(self):
+        """property of the class
+
+        Returns:
+            Float: valence value
+        """
         return self._valence
 
     @property
     def energy(self):
+        """
+        property of the class
+
+        Returns:
+            Float: Energy value
+        """
         return self._energy
 
     def analyse_rows(self, start_row, end_row):
+        """ This function calculates for a set of rows the value of valence and enery
+            This value is calculated doing the cumsum of the value of valence and energy of
+            each pixel.
+
+        Args:
+            start_row (integer): initial row for the analysis.
+            end_row (integer): last row (this one is not analyzed).
+        """        
         row_valence = 0
         row_energy = 0
-
+    
         for i in range(start_row, end_row):
             row = numpy.array(self._image_data[i])
             sub = row[:, numpy.newaxis] - self._colors
@@ -49,8 +78,12 @@ class ImageMood:
         self._lock.release()
 
     def analyse(self):
-        start_time = time.perf_counter()
+        """Analyse the whole image using the function written above with smaller sets of rows to be analyzed.
+            Implement of threats to do it faster.
 
+            The output/objective is calculate the final value of valence and energy of the picture.
+        """        
+        start_time = time.perf_counter()
         if not self._valence:
             self._image = Image.open(self._image_path)
             self._image_data = numpy.asarray(self._image)

@@ -4,10 +4,26 @@ from os.path import isfile, join
 
 
 def np_transformation(np_array):
+    """necessary transformation of the array
+
+    Args:
+        np_array (NumPyArray): array to be transformed 
+
+    Returns:
+       NumPyArray: transformed array
+    """    
     return np_array.reshape(149, 313, 1)
 
 
 def data_from_npy(path) -> np.ndarray:
+    """take all the .npy files that are in the directory path and return a npy array with all of them
+
+    Args:
+        path (PathLike): path of the npy files
+
+    Returns:
+        np.ndarray: array with all the npy files
+    """    
     files = listdir(path)
     files.sort()
     data = [
@@ -24,6 +40,11 @@ def data_from_npy(path) -> np.ndarray:
 
 
 def test_data(data):
+    """test the size of the spectograms are the requires wanted
+
+    Args:
+        data (npy array): array with a set of files 
+    """    
     EXPECTED_X = 149
     EXPECTED_Y = 313
 
