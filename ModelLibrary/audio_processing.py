@@ -284,24 +284,4 @@ def audio_processing(spectogram_save_dir=SAVE_PATH, audios_file=AUDIOS_FILE):
 
 
 if __name__ == "__main__":
-    FRAME_SIZE = 299
-    HOP_LENGTH = 705
-    DURATION = 10
-    SAMPLE_RATE = 22050
-    MONO = True
-
-    SPECTROGRAM_SAVE_DIR = "C:/Users/antho/Downloads/audio/spectograms2"
-    FILES_DIR = "C:/Users/antho/Downloads/audio/audio"
-
-    loader = Loader(SAMPLE_RATE, DURATION, MONO)
-    padder = Padder()
-    log_spectrogram_extractor = LogSpectrogramExtractor(FRAME_SIZE, HOP_LENGTH)
-    saver = Saver(SPECTROGRAM_SAVE_DIR)
-
-    preprocessing_pipeline = PreprocessingPipeline()
-    preprocessing_pipeline.loader = loader
-    preprocessing_pipeline.padder = padder
-    preprocessing_pipeline.extractor = log_spectrogram_extractor
-    preprocessing_pipeline.saver = saver
-
-    preprocessing_pipeline.process(FILES_DIR)
+    audio_processing()

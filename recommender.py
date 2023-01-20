@@ -44,6 +44,7 @@ class Recommender:
 
         for song in files:
             count, valence, energy, name = song.split('_',3)
+            print('m_valence', m_valence,'m_energy', m_energy, 'valence', valence, 'energy', energy)
             distance = sqrt(pow(m_energy - float(energy),2)+pow(m_valence - float(valence),2))
 
             if distance < selected_songs[0]['distance']:

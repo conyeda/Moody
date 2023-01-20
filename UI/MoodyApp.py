@@ -27,8 +27,8 @@ class WindowManager(ScreenManager):
 
 
 kv = Builder.load_file("UI/Screens/MainScreen/main_screen.kv")
-    """loads the main screen
-    """
+"""loads the main screen
+"""
 
 
 class MoodyApp(App):

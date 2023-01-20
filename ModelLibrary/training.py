@@ -20,6 +20,7 @@ if __name__ == '__main__':
         '/'.join([PATH, '..', '..', '..', 'mean_ratings_set1.xls']))
     
     mid_level_feature_results = csv_to_np('/'.join((PATH, '..', '..', 'mid_level_features.csv')), 0)
+    mid_level_feature_results = mid_level_feature_results*0.1
 
     A2Mid2Joint = MERModel((149, 313, 1))
     es = EarlyStopping(patience=50)
