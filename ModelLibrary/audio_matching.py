@@ -33,18 +33,10 @@ def search_songs(path, album):
     """Search songs based on album name.
 
     Args:
-        path (_type_): _description_
-        album (_type_): _description_
+        path (PathLike): path where the songs are stored
+        album (String): name of the album to search
     """
     audios_and_dirs = listdir(path)
-    """audios = [
-        audio 
-        for audio in audios_and_dirs 
-        if isfile('/'.join((path,audio)))
-        and 'tags' in dict(audio_metadata.load('/'.join((path,audio))))
-        and 'album' in dict(audio_metadata.load('/'.join((path,audio)))['tags'])
-        and audio_metadata.load('/'.join((path,audio)))['tags']['album'] == album
-    ]"""
     audios = []
     for audio in audios_and_dirs:
         try:
@@ -65,13 +57,3 @@ if __name__ == '__main__':
     audios = search_songs(DIR_PATH,'Soundtrack360')
     audios.sort()
     print(audios)
-    """audios_and_dirs = listdir(DIR_PATH)
-    audios = [
-        file 
-        for file in audios_and_dirs 
-        if isfile('/'.join((DIR_PATH,file)))
-    ]
-    for audio in audios:
-        audio_df =pd.DataFrame.from_dict(dict(audio_metadata.load('/'.join((DIR_PATH,audio)))['tags']))
-        if  'album' not in audio_df.columns or 'tracknumber' not in list(audio_df.columns):
-            print(audio_df, audio)"""

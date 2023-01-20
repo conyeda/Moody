@@ -33,7 +33,7 @@ class Loader:
             file_path (PathLike): path of the audio
 
         Returns:
-         AudioTimeSeries ,a npy.ndarray of floating point values 
+            AudioTimeSeries, a npy.ndarray of floating point values 
         """        
         signal = librosa.load(file_path,        #
                               sr=self.sample_rate,
@@ -159,15 +159,12 @@ class Saver:
 
 
 class PreprocessingPipeline:
-    """
-    PreprocessingPipeline processes audio files in a directory,
-    applying the following to each file
+    """PreprocessingPipeline processes audio files in a directory, applying the following to each file
         1 - load a file
         2 - pad the signal (if necessary)
         3 - extracting log spectrogram from signal
         4 - normalise spectrogram
-        5 - save the normalised signal
-    storing all the min max values for all the log spectrogram
+        5 - save the normalised signal storing all the min max values for all the log spectrogram
     """
 
     def __init__(self):

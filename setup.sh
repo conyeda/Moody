@@ -12,3 +12,5 @@ pip install numpy
 pip install tensorflow
 pip install librosa
 pip install matplotlib
+pip install sphinx
+pip install sphinx_rtd_theme

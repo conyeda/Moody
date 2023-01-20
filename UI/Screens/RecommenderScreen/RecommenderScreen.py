@@ -12,8 +12,7 @@ import os
 
 
 class RecommenderScreen(Screen):
-    """
-    Code associated to the screen that recommends songs, first of all loads the attributes
+    """Code associated to the screen that recommends songs, first of all loads the attributes
     and songs from their directory.
     """
     load_file = ObjectProperty(None)
@@ -28,13 +27,13 @@ class RecommenderScreen(Screen):
     _song_pos = 0
 
     def dismiss_popup(self):
-        """use to cancel a process (for instance, is going to be used
+        """Use to cancel a process (for instance, is going to be used
             to cancel the "image window" in the UI)
         """        
         self._popup.dismiss()
 
     def load(self, path, filename):
-        """saves the selected image's path and shows the image
+        """Saves the selected image's path and shows the image
 
         Args:
             path (PathLike): path of the image 
@@ -46,7 +45,7 @@ class RecommenderScreen(Screen):
         self._popup.dismiss()
 
     def show_load(self):
-        """shows the window to choose the image
+        """Shows the window to choose the image
         """    
         content = LoadDialog(
             load=self.load, cancel=self.dismiss_popup, path=self._file_chooser_path)
@@ -55,7 +54,7 @@ class RecommenderScreen(Screen):
         self._popup.open()
 
     def recommend(self):
-        """calls to the function recommend_async that is run in a new thread
+        """Calls to the function recommend_async that is run in a new thread
         """
         if (self.image_path_label.text != ""):
             self.recommended_song_label.text = "analysing..."
@@ -73,7 +72,7 @@ class RecommenderScreen(Screen):
             self._recommended_song)
 
     def play_song(self):
-        """code associated to the botton to play the song use to reproduce the recommended song
+        """Code associated to the botton to play the song use to reproduce the recommended song
         """
         if (self._song is None and self._recommended_song is not None):
             self._song = SoundLoader.load(os.path.join(
@@ -84,14 +83,14 @@ class RecommenderScreen(Screen):
             self._song.seek(self._song_pos)
 
     def pause_song(self):
-        """code associated to the botton to pause the song, use to pause the song
+        """Code associated to the botton to pause the song, use to pause the song
         """
         if (self._song is not None and self._song.state == "play"):
             self._song_pos = self._song.get_pos()
             self._song.stop()
 
     def stop_song(self):
-        """code associated to the botten that stops the song, when this botton is clicked 
+        """Code associated to the botten that stops the song, when this botton is clicked 
             the song is pause and also restart.
         """
         if (self._song is not None):

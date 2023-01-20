@@ -1,0 +1,1 @@
+"""Main Screen of the Moody App."""

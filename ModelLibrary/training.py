@@ -1,4 +1,6 @@
-#  Script used to train the model and save it
+"""
+This script trains the model and saves it.
+"""
 
 import matplotlib.pyplot as plt
 from model import MERModel
@@ -8,8 +10,7 @@ from npy_opening import data_from_npy
 from keras.callbacks import EarlyStopping
 from csv_opening import csv_to_np
 
-"""train the model
-"""
+
 if __name__ == '__main__':
     PATH = str(pathlib.Path(__file__).parent.resolve())
     FILE_PATH = '/'.join((PATH, '..', '..', '..', 'spectrograms/'))

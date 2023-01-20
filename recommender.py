@@ -1,5 +1,5 @@
 import pathlib
-from ImageMood import ImageMood
+from ImageAnalyser.ImageMood import ImageMood
 from os import listdir
 from math import sqrt, pow
 import random
